@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,5 +17,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Test workflow
-        run: echo "GitHub Actions workflow started successfully!"
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::926909119009:role/GitHubActionsK3sDeployRole
+          aws-region: ap-south-1
+
+      - name: Test AWS authentication
+        run: |
+          aws sts get-caller-identity
