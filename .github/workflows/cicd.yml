@@ -26,3 +26,4 @@ jobs:
       - name: Test AWS authentication
         run: |
           aws sts get-caller-identity
+# OIDC authentication test
