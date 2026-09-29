@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aws-k3s-cicd
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aws-k3s-cicd
+  template:
+    metadata:
+      labels:
+        app: aws-k3s-cicd
+    spec:
+      imagePullSecrets:
+        - name: ecr-registry-secret
+      containers:
+        - name: aws-k3s-cicd
+          image: 926909119009.dkr.ecr.ap-south-1.amazonaws.com/aws-k3s-cicd:1.0
+          ports:
+            - containerPort: 5000
